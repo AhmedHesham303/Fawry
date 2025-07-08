@@ -1,0 +1,82 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+class Book{
+    private:
+        enum Book_type{Paper_book,EBook,Demo_book};
+        string ISBN;
+        string title;
+        int year;
+        double price;
+    public:
+    Book() = default;
+    Book(string book_type,string title,int year,string ISBN,double price)
+    {
+        this.book_type = book_type;
+        this.title = title;
+        this.year = year;
+        this.ISBN = ISBN;
+        this.price = price;
+        
+    }
+};
+class BookStore{
+    private:    
+        vector<Book>books;
+        int books_quantity = 0;
+    public:
+        BookStore() = default;
+        BookStore(vector<Book>books){
+            for(int i=0;i<books.size();i++){
+                this.books[i] = books[i];
+                books_quantity ++;
+            }
+        }
+        void add_book(Book book){
+            books.push_back(book);
+            books_quantity ++;
+        }
+        void remove_out_dated(int year){
+            int counter = 0;
+            for(int i=0;i<books_quantity;i++)
+            {
+                if(books[i].year < year)
+                {
+                    books.erase(books.begin() + counter--);
+                    books_quantity--;
+                }
+                counter++;
+            }
+        }
+        
+        
+        ShippingService(Book,string address){cout<<"shipped to "+ address;}
+        EmailService(Book,string email){cout<<"email Sent to "+ email;}
+
+        void buy_book(string ISBN,string email,string address)
+        {
+            try{
+                bool found = 0;
+                for(int i=0;i<books_quantity;i++)
+                {
+                    if(books[i].ISBN == ISBN)
+                    {
+                        books.erase(books.begin()+i);
+                        books_quantity--;
+                        found = 1
+                        if(books[i].book_type == "Paper_book") ShippingService(books[i],address);
+                         if(books[i].book_type == "Ebook") EmailServiceService(books[i],email);
+                    }
+                }
+                if(!found)throw("book not found");
+            }
+            catch(string err){
+                cout<<err;
+            }
+        }
+};
+int main() {
+  
+
+  return 0;
+}
